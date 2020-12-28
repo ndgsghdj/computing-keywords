@@ -51,7 +51,7 @@ at your own risk
 
 ## Übersicht tips
 
-- with default settings of Übersicht, you can't usej desktop icons well
+- with default settings of Übersicht, you can't handle desktop icons well
     - click the menu icon of Übersicht
     - select `Preferences...`
     - off the check box of `Enable interaction`
