@@ -16,6 +16,8 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 - `clock` : show current date and time
 - `weather` : show current weather in the specified city
 
+![](sample.png)
+
 ## clock widget
 
 ### setup the clock widget
