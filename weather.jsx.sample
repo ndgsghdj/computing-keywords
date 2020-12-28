@@ -84,11 +84,11 @@ export const command = (dispatch) => {
         + "&units=" + unit_api.toString()
         + "&lang=en"
         + "&appid=" + api_key.toString()
-    ).then(function(response) {
+    ).then((response) => {
         return response.json();
     }).catch((error) => {
         dispatch({type: "FETCH/FAIL", error: error});
-    }).then(function(body) {
+    }).then((body) => {
         dispatch({type: "FETCH/SUCCESS", body: body});
     });
 };
