@@ -3,6 +3,8 @@ import {css} from "uebersicht";
 // styles
 const date = css({
     fontSize: "64px",
+    position: "relative",
+    left: "20px",
 });
 const time = css({
     fontSize: "256px",
@@ -45,7 +47,7 @@ export const render = ({output}) => {
     var datetime = output.split(" ");
     return (
         <div>
-        <div className={date}>&nbsp;&nbsp;{datetime[0]}</div>
+        <div className={date}>{datetime[0]}</div>
         <br/>
         <div className={time}>{datetime[1]}</div>
         </div>
