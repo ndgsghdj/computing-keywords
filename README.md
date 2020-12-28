@@ -46,3 +46,10 @@ at your own risk
 - use fahrenheit instead of celsius as the unit of temperature
     - change the value of `unit_api` as `imperial`
     - change the value of `unit_icon` as `\uf045`
+
+## Übersicht tips
+
+- with default settings of Übersicht, you can't usej desktop icons well
+    - click the menu icon of Übersicht
+    - select `Preferences...`
+    - off the check box of `Enable interaction`
