@@ -19,8 +19,8 @@ export const className = {
     textAlign:  "center",
     lineHeight: 1,
     // font
-    fontFamily:     "Helvetica Neue",
-    fontWeight:     "Regular",
+    fontFamily:     "YuKyokasho, Helvetica Neue",
+    fontWeight:     "Medium",
     fontSmoothing:  "antialiased",
     // font color
     color:      "#ffffff",
