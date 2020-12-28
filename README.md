@@ -34,7 +34,7 @@ at your own risk
 
 - [OpenWeatherMap](https://openweathermap.org/)
     - create your account and get API key of free plan if you don't have
-    - download [city.list.json.gz](http://bulk.openweathermap.org/sample/city.list.json.gz] and unzip it
+    - download [city.list.json.gz](http://bulk.openweathermap.org/sample/city.list.json.gz) and unzip it
     - find the city ID of your favourite city from city.list.json
 - [WeatherIcons](https://erikflowers.github.io/weather-icons/)
     - download zipfile and unzip it
