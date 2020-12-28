@@ -1,0 +1,230 @@
+import {css} from "uebersicht";
+
+// parameters
+// http://bulk.openweathermap.org/sample/city.list.json.gz
+const city_id = "2128295";
+// API key of openweathermap.org
+const api_key = "XXXXX";
+
+// unit of temperature
+// https://openweathermap.org/current#data
+const unit_api = "metric";
+//const unit_api = "imperial";
+// https://erikflowers.github.io/weather-icons/
+const unit_icon = "\uf03c";
+//const unit_icon = "\uf045";
+
+// styles
+const city_style = css({
+    fontSize: "16px",
+});
+const weather_icon_style = css({
+    fontSize: "32px",
+    fontFamily: "weathericons",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    display: "inline-block",
+    lineHeight: 1.5,
+    width: "1.4em",
+});
+const temp_value_style = css({
+    fontSize: "24px",
+    lineHeight: 1.5,
+    display: "inline-block",
+    position: "relative",
+    left: "5px",
+});
+const temp_unit_style = css({
+    fontSize: "32px",
+    fontFamily: "weathericons",
+    fontWeight: "normal",
+    fontStyle: "normal",
+    display: "inline-block",
+    lineHeight: 1.5,
+    position: "relative",
+    top: "6px",
+    left: "5px",
+});
+const weather_text_style = css({
+    fontSize: "12px",
+    position: "relative",
+    top: "-5px",
+});
+export const className = `
+    top:    3%;
+    bottom: auto;
+    left:   2%;
+    width:  100px;
+    text-align: center;
+    line-height: 1;
+    font-family: Helvetica Neue;
+    font-weight: Regular;
+    font-smoothing: antialiased;
+    color:  #ffffff;
+    text-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+    @font-face {
+        font-family: weathericons;
+        src: url("weathericons-regular-webfont.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+`;
+
+// refresh frequency
+export const refreshFrequency = 3600000; // 1 hour
+
+// command
+// invoked every `refreshFrequency` milliseconds.
+// the return value is passed to the `updateState` function.
+export const command = (dispatch) => {
+    fetch(
+        "https://api.openweathermap.org/data/2.5/weather"
+        + "?id=" + city_id.toString()
+        + "&units=" + unit_api.toString()
+        + "&lang=en"
+        + "&appid=" + api_key.toString()
+    ).then(function(response) {
+        return response.json();
+    }).catch((error) => {
+        dispatch({type: "FETCH/FAIL", error: error});
+    }).then(function(body) {
+        dispatch({type: "FETCH/SUCCESS", body: body});
+    });
+};
+// test command
+//export const command = (dispatch) => {
+//    dispatch({type: "FETCH/SUCCESS", body: {
+//        weather: [{
+//            id: 200,
+//            description: "test weather",
+//        }],
+//        main: {
+//            temp: -12.34,
+//        },
+//        dt: 1609118643, // day
+//        //dt: 1609102643, // night
+//        sys: {sunrise: 1609106727, sunset: 1609139193},
+//        name: "TestCity",
+//    }});
+//};
+
+// the mappings
+// from weather ids of openweathermap.org
+// https://openweathermap.org/weather-conditions
+// to icon names of weather icons
+// https://erikflowers.github.io/weather-icons/
+const weather_map = new Map([
+    [200, ["\uf010", "\uf02d"]], // thunderstorm with light rain
+    [201, ["\uf01e", "\uf01e"]], // thunderstorm with rain
+    [202, ["\uf01e", "\uf01e"]], // thunderstorm with heavy rain
+    [210, ["\uf010", "\uf02d"]], // light thunderstorm
+    [211, ["\uf01e", "\uf01e"]], // thunderstorm
+    [212, ["\uf01e", "\uf01e"]], // heavy thunderstorm
+    [221, ["\uf01e", "\uf01e"]], // ragged thunderstorm
+    [230, ["\uf00e", "\uf02c"]], // thunderstorm with light drizzle
+    [231, ["\uf01d", "\uf01d"]], // thunderstorm with drizzle
+    [232, ["\uf01d", "\uf01d"]], // thunderstorm with heavy drizzle
+    [300, ["\uf0b2", "\uf0b4"]], // light intensity drizzle
+    [301, ["\uf0b5", "\uf0b5"]], // drizzle
+    [302, ["\uf0b5", "\uf0b5"]], // heavy intensity drizzle
+    [310, ["\uf0b2", "\uf0b4"]], // light intensity drizzle rain
+    [311, ["\uf0b5", "\uf0b5"]], // drizzle rain
+    [312, ["\uf0b5", "\uf0b5"]], // heavy intensity drizzle rain
+    [313, ["\uf01a", "\uf01a"]], // shower rain and drizzle
+    [314, ["\uf01a", "\uf01a"]], // heavy shower rain and drizzle
+    [321, ["\uf01a", "\uf01a"]], // shower drizzle
+    [500, ["\uf008", "\uf028"]], // light rain
+    [501, ["\uf019", "\uf019"]], // moderate rain
+    [502, ["\uf019", "\uf019"]], // heavy intensity rain
+    [503, ["\uf019", "\uf019"]], // very heavy rain
+    [504, ["\uf019", "\uf019"]], // extreme rain
+    [511, ["\uf019", "\uf019"]], // freezing rain
+    [520, ["\uf007", "\uf027"]], // light intensity shower rain
+    [521, ["\uf018", "\uf018"]], // shower rain
+    [522, ["\uf018", "\uf018"]], // heavy intensity shower rain
+    [531, ["\uf018", "\uf018"]], // ragged shower rain
+    [600, ["\uf00a", "\uf02a"]], // light snow
+    [601, ["\uf01b", "\uf01b"]], // snow
+    [602, ["\uf01b", "\uf01b"]], // heavy snow
+    [611, ["\uf0b2", "\uf0b4"]], // sleet
+    [612, ["\uf004", "\uf0b4"]], // light shower sleet
+    [613, ["\uf015", "\uf015"]], // shower sleet
+    [615, ["\uf006", "\uf026"]], // light rain and snow
+    [616, ["\uf017", "\uf017"]], // rain and snow
+    [620, ["\uf065", "\uf067"]], // light shower snow
+    [621, ["\uf064", "\uf064"]], // shower snow
+    [622, ["\uf064", "\uf064"]], // heavy shower snow
+    [701, ["\uf0b6", "\uf04a"]], // mist
+    [711, ["\uf062", "\uf062"]], // smoke
+    [721, ["\uf0b6", "\uf04a"]], // haze
+    [731, ["\uf082", "\uf082"]], // sand / dust whirls
+    [741, ["\uf014", "\uf014"]], // fog
+    [751, ["\uf082", "\uf082"]], // sand
+    [761, ["\uf063", "\uf063"]], // dust
+    [762, ["\uf0c8", "\uf0c8"]], // volcanis ash
+    [771, ["\uf019", "\uf019"]], // squalls
+    [781, ["\uf056", "\uf056"]], // tornado
+    [800, ["\uf00d", "\uf02e"]], // clear sky
+    [801, ["\uf002", "\uf086"]], // few clouds: 11-25%
+    [802, ["\uf002", "\uf086"]], // scattered clouds: 25-50%
+    [803, ["\uf041", "\uf041"]], // broken clouds: 51-84%
+    [804, ["\uf013", "\uf013"]], // overcast clouds: 85-100%
+]);
+
+// initialState
+// default value of "previousState" of the argument of `updateState`
+export const initialState = {
+    output: {
+        city: "loading...",
+        weather_icon: "\uf04c",
+        temperature: "?",
+        weather_text: "???",
+    },
+};
+
+// get icon of current weather
+const getWeatherIcon = (body) => {
+    var sunrise = new Date(body.sys.sunrise * 1000);
+    var sunset = new Date(body.sys.sunset * 1000);
+    var now = new Date(body.dt * 1000);
+    var day_or_night = 1;
+    if ((now > sunrise) && (now < sunset)) {
+        day_or_night = 0;
+    };
+    var icon_list = weather_map.get(body.weather[0].id);
+    return icon_list ? icon_list[day_or_night] : "\uf07b"
+};
+
+// updateState
+export const updateState = (event, previousState) => {
+    if (event.type == "UB/COMMAND_RAN") {
+        return {...previousState};
+    };
+    if (event.type == "FETCH/FAIL") {
+        return {...previousState};
+    };
+    var icon_name = getWeatherIcon(event.body);
+    return {
+        output: {
+            city: event.body.name,
+            weather_icon: icon_name,
+            temperature: Math.round(event.body.main.temp).toString(),
+            weather_text: event.body.weather[0].description,
+        },
+    };
+};
+
+// render
+export const render = ({output}) => {
+    return (
+        <div>
+        <span className={city_style}>{output.city}</span>
+        <br/>
+        <span className={weather_icon_style}>{output.weather_icon}</span>
+        <span className={temp_value_style}>{output.temperature}</span>
+        <span className={temp_unit_style}>{unit_icon}</span>
+        <br/>
+        <span className={weather_text_style}>{output.weather_text}</span>
+        </div>
+    );
+};
