@@ -18,6 +18,8 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 - `analog_clock`: show small analog clock
 - `github_issues`: show github issues
 
+sample image:
+
 ![](sample.png)
 
 ## clock widget
