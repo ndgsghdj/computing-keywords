@@ -2,12 +2,13 @@ import {css} from "uebersicht";
 
 // styles
 export const className = `
-    top:    2%;
-    left:   2%;
-    width:  80;
-    height: 80;
+    top:    20px;
+    left:   20px;
+    width:  80px;
+    height: 80px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    filter: drop-shadow(3px 3px 3px rgba(64, 64, 64, 0.8));
 `;
 
 // refresh frequency

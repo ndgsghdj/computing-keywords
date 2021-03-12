@@ -51,10 +51,10 @@ const weather_text_style = css({
     top: "-5px",
 });
 export const className = `
-    top:    2%;
+    top:    110px;
     bottom: auto;
-    left:   auto;
-    right:  1%;
+    left:   6px;
+    right:  auto;
     width:  100px;
     text-align: center;
     line-height: 1;

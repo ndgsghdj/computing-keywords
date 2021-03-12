@@ -15,6 +15,8 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 
 - `clock` : show current date and time
 - `weather` : show current weather in the specified city
+- `analog_clock`: show small analog clock
+- `github_issues`: show github issues
 
 ![](sample.png)
 
@@ -23,10 +25,6 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 ### setup the clock widget
 
 nothing needed
-
-### customize the clock widget
-
-at your own risk
 
 ## weather widget
 
@@ -48,6 +46,28 @@ at your own risk
 - use fahrenheit instead of celsius as the unit of temperature
     - change the value of `unit_api` as `imperial`
     - change the value of `unit_icon` as `\uf045`
+
+## analog\_clock widget
+
+### setup the analog\_clock widget
+
+nothing needed
+
+## github\_issues widget
+
+the color of each bullet is the color of tha tag attach to the github issue
+
+(if the github issue is untagged, the bullet color is white)
+
+### setup the github_issues widget
+
+- github.com
+    - go [Developer settings](https://github.com/settings/apps) and create a personal access token
+    - create new repository if you want
+        - I created a new repository to use issues as a todo list
+- github\_issues widget
+    - copy `github_issues.jsx.sample` as `github_issues.jsx`
+    - change values of `token`, `user` and `repo` in `github_issues.jsx`
 
 ## Übersicht tips
 

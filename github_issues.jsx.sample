@@ -1,0 +1,69 @@
+import {css} from "uebersicht";
+
+// parameters
+// personal access token of github.com
+export const token = "your personal access token";
+// username of github.com
+export const user = "your username of github";
+// repository name
+export const repo = "your repository";
+
+// styles
+export const className = `
+    position: fixed;
+    top:    auto;
+    bottom: 20px;
+    left:   0px;
+    right:  auto;
+    width:  400px;
+    text-align: left;
+    line-height: 1.1;
+    font-family: YuKyokasyo, Helvetica Neue;
+    font-weight: medium;
+    font-smoothing: antialiased;
+    font-size: 14px;
+    color:  #ffffff;
+    text-shadow: 2px 2px 2px rgba(64, 64, 64, 0.8);
+    li {
+        color: #ffffff;
+    }
+    li span {
+        color: #ffffff;
+    }
+`;
+
+// refresh frequency
+export const refreshFrequency = 3600000; // 1 hour
+
+// command
+// invoked every `refreshFrequency` milliseconds.
+// the return value is passed to the `updateState` function.
+export const command = `curl -s -u ${user}:${token} -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/repos/${user}/${repo}/issues`;
+
+// initialState
+// SKIP
+
+// updateState
+// SKIP
+
+// render
+export const render = ({output}) => {
+    if (typeof output === "undefined") {
+        return (<div></div>);
+    }
+    var todos = [];
+    var issues = JSON.parse(output || "null");
+    if (issues == null) {
+        return (<div></div>);
+    }
+    issues.forEach(issue => {
+        var color = "#ffffff";
+        if (issue.labels.length > 0) {
+            color = `#${issue.labels[0].color}`;
+        }
+        todos.push(<li style={{color}}><span>{issue.title}</span></li>);
+    });
+    return (
+        <div><ul>{todos}</ul></div>
+    );
+};

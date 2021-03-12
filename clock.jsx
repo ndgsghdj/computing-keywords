@@ -13,8 +13,8 @@ export const className = {
     // position
     top:    "auto",
     bottom: "50%",
-    left:   "3%",
-    width:  "94%",
+    left:   "20%",
+    width:  "60%",
     transform:  "translateY(50%)",
     textAlign:  "center",
     lineHeight: 1,
