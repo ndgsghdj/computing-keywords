@@ -17,6 +17,7 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 - `weather` : show current weather in the specified city
 - `analog_clock`: show small analog clock
 - `github_issues`: show github issues
+- `quote`: show quote of the day (from [zenquotes.io](https://zenquotes.io/))
 
 sample image:
 
@@ -70,6 +71,12 @@ the color of each bullet is the color of tha tag attach to the github issue
 - github\_issues widget
     - copy `github_issues.jsx.sample` as `github_issues.jsx`
     - change values of `token`, `user` and `repo` in `github_issues.jsx`
+
+## quote widget
+
+### setup the quote widget
+
+nothing needed
 
 ## Übersicht tips
 
