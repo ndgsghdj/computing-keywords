@@ -12,7 +12,7 @@ const time = css({
 export const className = {
     // position
     top:    "auto",
-    bottom: "50%",
+    bottom: "55%",
     left:   "20%",
     width:  "60%",
     transform:  "translateY(50%)",

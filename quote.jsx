@@ -11,7 +11,7 @@ const author = css({
 export const className = {
     position: "fixed",
     top:    "auto",
-    bottom: "15%",
+    bottom: "20%",
     left:   "20%",
     right:  "auto",
     width:  "60%",

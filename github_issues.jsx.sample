@@ -1,12 +1,10 @@
-import {css} from "uebersicht";
-
 // parameters
 // personal access token of github.com
-export const token = "your personal access token";
+const token = "your personal access token";
 // username of github.com
-export const user = "your username of github";
+const user = "your username of github";
 // repository name
-export const repo = "your repository";
+const repo = "your repository";
 
 // styles
 export const className = `

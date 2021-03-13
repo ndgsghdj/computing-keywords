@@ -1,4 +1,10 @@
-import {css} from "uebersicht";
+// parameter
+const color = "white";
+const size = 80; // size of clock
+const hwid = 4;  // width of hour hand
+const mwid = 3;  // width of minute hand
+const hlen = 25; // length of hour hand
+const mlen = 33; // length of minute hand
 
 // styles
 export const className = `
@@ -26,22 +32,9 @@ export const command = "true";
 
 // render
 export const render = ({output}) => {
-    // parameter
-    var color = "white";
-    var size = 80;
-    var hwid = 4;  // width of hour hand
-    var mwid = 3;  // width of minute hand
-    var iwid = 2;  // width of index
-    var hlen = 25; // length of hour hand
-    var mlen = 30; // length of minute hand
-    var ilen = 3;  // length of index
-    // calc length
-    var cent = size / 2;
-    var hoff = cent - hlen;
-    var moff = cent - mlen;
-    var ioff = iwid / 2;
-    var iset = ioff + ilen;
-    // calc degree
+    var cent = Math.floor(size / 2);
+    var irad = 1;  // radius of index
+    // get time
     var now = new Date();
     var hour = now.getHours();
     if (hour >= 12) {
@@ -49,32 +42,30 @@ export const render = ({output}) => {
     }
     var minute = now.getMinutes();
     var second = now.getSeconds();
-    var hdeg = ((hour * 3600) + (minute * 60) + second) / 120;
-    var mdeg = ((minute * 60) + second) / 10;
-    var hrot = "rotate(" + hdeg + "," + cent + "," + cent + ")";
-    var mrot = "rotate(" + mdeg + "," + cent + "," + cent + ")";
-    var irot = [];
+    // hour hand
+    var hrad = ((hour * 3600) + (minute * 60) + second) * Math.PI / 21600;
+    var hx = Math.round((hlen * Math.sin(hrad)) + cent);
+    var hy = Math.round(cent - (hlen * Math.cos(hrad)));
+    var hhand = <line x1={cent} y1={cent} x2={hx} y2={hy} stroke={color} strokeWidth={hwid} strokeLinecap="round" shapeRendering="crispEdges"/>;
+    // minute hand
+    var mrad = ((minute * 60) + second) * Math.PI / 1800;
+    var mx = Math.round((mlen * Math.sin(mrad)) + cent);
+    var my = Math.round(cent - (mlen * Math.cos(mrad)));
+    var mhand = <line x1={cent} y1={cent} x2={mx} y2={my} stroke={color} strokeWidth={mwid} strokeLinecap="round" shapeRendering="crispEdges"/>;
+    // indexes
+    var indexes = [];
     for (let i = 0; i < 12; i++) {
-        var tdeg = i * 30;
-        irot.push("rotate(" + tdeg + "," + cent + "," + cent + ")");
+        var trad = i * Math.PI / 6;
+        var cx = Math.round(((cent - irad) * Math.sin(trad)) + cent);
+        var cy = Math.round(cent - ((cent - irad) * Math.cos(trad)));
+        indexes.push(<circle cx={cx} cy={cy} r={irad} fill={color} stroke={color} shapeRendering="crispEdges"/>);
     }
     return (
         <div>
-        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size}>
-        <line x1={cent} y1={cent} x2={cent} y2={hoff} stroke={color} strokeWidth={hwid} strokeLinecap="round" shapeRendering="crispEdges" transform={hrot}/>
-        <line x1={cent} y1={cent} x2={cent} y2={moff} stroke={color} strokeWidth={mwid} strokeLinecap="round" shapeRendering="crispEdges" transform={mrot}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[0]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[1]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[2]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[3]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[4]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[5]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[6]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[7]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[8]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[9]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[10]}/>
-        <line x1={cent} y1={ioff} x2={cent} y2={iset} stroke={color} strokeWidth={iwid} strokeLinecap="square" shapeRendering="crispEdges" transform={irot[11]}/>
+        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewbox="0 0 {size} {size}">
+        {mhand}
+        {hhand}
+        {indexes}
         </svg>
         </div>
     );

@@ -193,7 +193,7 @@ const getWeatherIcon = (body) => {
         day_or_night = 0;
     };
     var icon_list = weather_map.get(body.weather[0].id);
-    return icon_list ? icon_list[day_or_night] : "\uf07b"
+    return icon_list ? icon_list[day_or_night] : "\uf07b";
 };
 
 // updateState
