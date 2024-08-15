@@ -1,10 +1,11 @@
 import {css} from "uebersicht";
+import keywords from "./keywords.json"
 
 // styles
 const quote = css({
     fontSize: "24px",
 });
-const author = css({
+const chapter = css({
     fontSize: "18px",
     fontStyle: "italic",
 });
@@ -25,12 +26,18 @@ export const className = {
 };
 
 // refresh frequency
-export const refreshFrequency = 86400000; // 1 day
+export const refreshFrequency = 10000; // 1 day
 
-// command
+// random quote
+
+export const command = () => {
+    const randomIndex = Math.floor(Math.random() * keywords.keywords.length);
+    console.log(keywords.keywords)
+    return keywords.keywords[randomIndex];
+}
+
 // invoked every `refreshFrequency` milliseconds.
 // the return value is passed to the `updateState` function.
-export const command = "curl -s https://zenquotes.io/api/today";
 
 // initialState
 // SKIP
@@ -40,18 +47,11 @@ export const command = "curl -s https://zenquotes.io/api/today";
 
 // render
 export const render = ({output}) => {
-    if (typeof output === "undefined") {
-        return (<div></div>);
-    }
-    var quotes = JSON.parse(output || "null");
-    if (quotes == null) {
-        return (<div></div>);
-    }
     return (
         <div>
-        <span className={quote}>"{quotes[0].q}"</span>
+        <span className={quote}>{output.keyword}: {output.definition}</span>
         <br/>
-        <span className={author}>{quotes[0].a}</span>
+        <span className={chapter}>Chapter: {output.chapter}</span>
         </div>
     );
 };

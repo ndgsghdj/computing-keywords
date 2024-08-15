@@ -14,10 +14,7 @@ Widgets of Übersicht (https://tracesof.net/uebersicht/)
 ## contained widgets
 
 - `clock` : show current date and time
-- `weather` : show current weather in the specified city
-- `analog_clock`: show small analog clock
-- `github_issues`: show github issues
-- `quote`: show quote of the day (from [zenquotes.io](https://zenquotes.io/))
+- `keywords`: shows random keywords from the O Level Computing Syllabus every 10 seconds
 
 sample image:
 
