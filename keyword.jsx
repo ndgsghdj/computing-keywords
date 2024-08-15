@@ -49,9 +49,9 @@ export const command = () => {
 export const render = ({output}) => {
     return (
         <div>
-        <span className={quote}>{output.keyword}: {output.definition}</span>
+        <span className={quote}><strong>{output.keyword}</strong>: {output.definition}</span>
         <br/>
-        <span className={chapter}>Chapter: {output.chapter}</span>
+        <span className={chapter}><strong>Chapter</strong>: {output.chapter}</span>
         </div>
     );
 };
